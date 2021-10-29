@@ -9,7 +9,7 @@ function encryptString(key: Buffer, plaintext: string): Buffer {
   const aes = crypto.createCipheriv('aes-256-cbc', key, iv);
   const buf1 = aes.update(plaintext, 'utf-8');
   const buf2 = aes.final();
-  return Buffer.concat([iv, buf1, buf2], iv.length + buf1.length + buf2.length);
+  return Buffer.concat([iv, buf1, buf2]);
 }
 
 function decryptString(key: Buffer, ciphertext: Buffer): string {
@@ -18,7 +18,7 @@ function decryptString(key: Buffer, ciphertext: Buffer): string {
   const aes = crypto.createDecipheriv('aes-256-cbc', key, iv);
   const buf1 = aes.update(data);
   const buf2 = aes.final();
-  return Buffer.concat([buf1, buf2], buf1.length + buf2.length).toString('utf-8');
+  return Buffer.concat([buf1, buf2]).toString('utf-8');
 }
 
 const key = crypto.randomBytes(32); // to jest dataKey.PlainText (KeySpec = AES_256), bezpośrednio w postaci binarnej
